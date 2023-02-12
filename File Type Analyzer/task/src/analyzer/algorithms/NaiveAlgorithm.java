@@ -13,14 +13,12 @@ public class NaiveAlgorithm implements Algorithm {
             byte[] data = Files.readAllBytes(file.toPath());
             String fileAsString = new String(data);
             if (fileAsString.contains(pattern)) {
-                return description;
+               return file.getName() + ": " + description;
             } else {
-
-                return UNKNOWN_FORMAT;
+                return file.getName() + ": " + UNKNOWN_FORMAT;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

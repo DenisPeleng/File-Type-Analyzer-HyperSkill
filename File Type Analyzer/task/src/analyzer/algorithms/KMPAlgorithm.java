@@ -13,14 +13,13 @@ public class KMPAlgorithm implements Algorithm {
             byte[] data = Files.readAllBytes(file.toPath());
             String fileAsString = new String(data);
             if (KMPSearch(pattern, fileAsString)) {
-                return description;
+                return file.getName() + ": " + description;
             } else {
-                return UNKNOWN_FORMAT;
+                return file.getName() + ": " + UNKNOWN_FORMAT;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     private boolean KMPSearch(String pattern, String txt) {
