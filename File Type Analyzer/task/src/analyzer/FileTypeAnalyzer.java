@@ -8,19 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
-public class FileProcessing {
-    public static void checkFiles(String[] args) {
-
+public class FileTypeAnalyzer {
+    public static void execute() {
         ExecutorService executor = Executors.newFixedThreadPool(10);
-        String folderPath = args[0];
-        String searchType = args[1];
-        String typeDescription = args[2];
         Algorithm algorithmTextProcess = new KMPAlgorithm();
-        List<File> filesToProcess = DirectoryProcessing.getAllFilesFromChildFolders(folderPath);
         List<Callable<String>> callables = new ArrayList<>();
+        List<File> filesToProcess = FileUtils.getFilesToProcess();
+        List<FileFormat> patternsList = FileUtils.getPatternsList();
+        algorithmTextProcess.setPatternList(patternsList);
         for (File tmp : filesToProcess
         ) {
-            callables.add(() -> algorithmTextProcess.execute(tmp, searchType, typeDescription));
+            callables.add(() -> algorithmTextProcess.execute(tmp));
+
 
         }
 
