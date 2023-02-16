@@ -1,7 +1,7 @@
 package analyzer;
 
 import analyzer.algorithms.Algorithm;
-import analyzer.algorithms.KMPAlgorithm;
+import analyzer.algorithms.RabinKarpAlgorithm;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.concurrent.*;
 public class FileTypeAnalyzer {
     public static void execute() {
         ExecutorService executor = Executors.newFixedThreadPool(10);
-        Algorithm algorithmTextProcess = new KMPAlgorithm();
+        Algorithm algorithmTextProcess = new RabinKarpAlgorithm();
         List<Callable<String>> callables = new ArrayList<>();
         List<File> filesToProcess = FileUtils.getFilesToProcess();
         List<FileFormat> patternsList = FileUtils.getPatternsList();
@@ -28,7 +28,6 @@ public class FileTypeAnalyzer {
             futures = executor.invokeAll(callables);
             for (Future<String> future : futures) {
                 System.out.println(future.get());
-
             }
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
